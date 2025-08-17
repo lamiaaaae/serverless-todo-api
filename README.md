@@ -32,20 +32,23 @@ The following diagram illustrates the architecture of the solution:
 5. Logs and monitoring are collected in **Amazon CloudWatch**.  
 6. **IAM roles and policies** control access between services securely.  
 
-##  Project Customization
 
-### Prerequisites for Customization
+# Customizing the Solution
+
+## Prerequisites for Customization
+
 - AWS Command Line Interface (CLI)  
 - Node.js 20.x or later
 
-### 1. Clone the Repository
+### 1. Clone the repository
+
 ```bash
 git clone https://github.com/your-username/my-project.git
 cd my-project
 export MAIN_DIRECTORY=$PWD
 
-### 2. Unit Test
 
+### 2. Unit Test
 
 After making changes, run unit tests to make sure added customizations pass:
 
@@ -53,8 +56,9 @@ After making changes, run unit tests to make sure added customizations pass:
 cd $MAIN_DIRECTORY/deployment
 chmod +x run-unit-tests.sh && ./run-unit-tests.sh
 
-### 3. Build and Deploy
+```
 
+### 3. Build and Deploy
 ```bash
 cd $MAIN_DIRECTORY/source/constructs
 npm run clean:install
@@ -63,4 +67,17 @@ overrideWarningsEnabled=false npx cdk deploy \
  --parameters DeployDemoUIParameter=Yes \
  --parameters SourceBucketsParameter=<MY_BUCKET> \
  --profile <PROFILE_NAME>
+
+```
+
+_Note:_
+- **MY_BUCKET**: name of an existing bucket or the list of comma-separated bucket names in your account
+- **PROFILE_NAME**: name of an AWS CLI profile that has appropriate credentials for deploying in your preferred region
+
+
+# License
+
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.   
+SPDX-License-Identifier: Apache-2.0
+
 
