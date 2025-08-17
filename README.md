@@ -1,4 +1,6 @@
-## 📌 Solution Overview
+# Serverless REST API with DynamoDB and API Gateway
+
+##  Solution Overview
 
 This project demonstrates the implementation of a **serverless REST API** on AWS to manage a simple to-do list (or customer records). The backend is fully serverless, relying on **Amazon API Gateway**, **AWS Lambda**, and **Amazon DynamoDB** for CRUD (Create, Read, Update, Delete) operations.
 
@@ -6,7 +8,7 @@ A static frontend hosted on **Amazon S3** (and optionally distributed via **Amaz
 
 The solution is **cost-effective, scalable, and fully managed** — meaning developers do not have to manage servers or infrastructure.
 
-### 🔹 Key Highlights:
+###  Key Highlights:
 - **Amazon API Gateway** provides REST endpoints for client interaction.  
 - **AWS Lambda** functions handle CRUD logic and are triggered by API Gateway.  
 - **Amazon DynamoDB** stores persistent records (NoSQL).  
@@ -16,13 +18,13 @@ The solution is **cost-effective, scalable, and fully managed** — meaning deve
 
 ---
 
-## 📌 Architecture Diagram
+##  Architecture Diagram
 
 The following diagram illustrates the architecture of the solution:
 
 ![Architecture Diagram](./docs/architecture.png)
 
-### 🔹 Workflow:
+###  Workflow:
 1. The **user** interacts with the **frontend** hosted on Amazon S3.  
 2. The frontend sends **HTTP requests** to **Amazon API Gateway**.  
 3. API Gateway routes the request to the **Lambda function**.  
