@@ -1,17 +1,17 @@
 const API_URL = "https://8vhpmfwx2g.execute-api.us-east-1.amazonaws.com/prod/tasks";
 
-// Charger toutes les tâches
+// Load all tasks
 async function loadTasks() {
   try {
-    console.log('🔄 Début chargement des tâches...');
+    console.log('🔄 Starting to load tasks...');
     const res = await fetch(API_URL);
-    console.log('📡 Réponse GET:', res.status, res.statusText);
+    console.log('📡 GET response:', res.status, res.statusText);
     
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }
     const tasks = await res.json();
-    console.log('📋 Tâches chargées:', tasks);
+    console.log('📋 Tasks loaded:', tasks);
     
     const list = document.getElementById("taskList");
     list.innerHTML = "";
@@ -19,47 +19,47 @@ async function loadTasks() {
     tasks.forEach(task => {
       const li = document.createElement("li");
      
-      // Texte de la tâche
+      // Task text
       const span = document.createElement("span");
       span.textContent = task.title;
       if (task.completed) span.classList.add("done");
      
-      // Bouton Toggle (changer état)
+      // Toggle button (change completed state)
       const toggleBtn = document.createElement("button");
-      toggleBtn.textContent = task.completed ? "❌ Non fait" : "✅ Fait";
+      toggleBtn.textContent = task.completed ? "❌ Not done" : "✅ Done";
       toggleBtn.onclick = () => toggleTask(task);
      
-      // Bouton Modifier
+      // Edit button
       const editBtn = document.createElement("button");
-      editBtn.textContent = "✏️ Modifier";
+      editBtn.textContent = "✏️ Edit";
       editBtn.onclick = () => editTask(task, li);
      
-      // Bouton Supprimer
+      // Delete button
       const delBtn = document.createElement("button");
-      delBtn.textContent = "🗑️ Supprimer";
+      delBtn.textContent = "🗑️ Delete";
       delBtn.onclick = () => deleteTask(task.id);
      
       li.append(span, " ", toggleBtn, " ", editBtn, " ", delBtn);
       list.appendChild(li);
     });
     
-    console.log('✅ Interface mise à jour avec', tasks.length, 'tâches');
+    console.log('✅ UI updated with', tasks.length, 'tasks');
   } catch (error) {
-    console.error('❌ Erreur lors du chargement des tâches:', error);
-    alert('Erreur lors du chargement des tâches: ' + error.message);
+    console.error('❌ Error loading tasks:', error);
+    alert('Error loading tasks: ' + error.message);
   }
 }
 
-// Ajouter une tâche
+// Add a task
 async function addTask() {
   const title = document.getElementById("taskTitle").value.trim();
-  if (!title) return alert("Veuillez entrer un titre !");
+  if (!title) return alert("Please enter a title!");
   
   const id = Date.now().toString();
   const newTask = { id, title, completed: false };
   
   try {
-    console.log('➕ Ajout d\'une tâche:', newTask);
+    console.log('➕ Adding task:', newTask);
     const response = await fetch(API_URL, {
       method: "POST",
       headers: { 
@@ -69,27 +69,27 @@ async function addTask() {
       body: JSON.stringify(newTask)
     });
     
-    console.log('📡 Réponse POST:', response.status, response.statusText);
+    console.log('📡 POST response:', response.status, response.statusText);
     const responseData = await response.text();
-    console.log('📡 Données de réponse POST:', responseData);
+    console.log('📡 POST response data:', responseData);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}, body: ${responseData}`);
     }
     
     document.getElementById("taskTitle").value = "";
-    console.log('🔄 Rechargement après ajout...');
+    console.log('🔄 Reloading tasks after add...');
     await loadTasks();
   } catch (error) {
-    console.error('❌ Erreur lors de l\'ajout:', error);
-    alert('Erreur lors de l\'ajout: ' + error.message);
+    console.error('❌ Error adding task:', error);
+    alert('Error adding task: ' + error.message);
   }
 }
 
-// Modifier (toggle état completed)
+// Toggle task completion
 async function toggleTask(task) {
   try {
-    console.log('🔄 Toggle de la tâche:', task.id, 'de', task.completed, 'vers', !task.completed);
+    console.log('🔄 Toggling task:', task.id, 'from', task.completed, 'to', !task.completed);
     const updatedTask = { 
       title: task.title, 
       completed: !task.completed 
@@ -104,25 +104,25 @@ async function toggleTask(task) {
       body: JSON.stringify(updatedTask)
     });
     
-    console.log('📡 Réponse PUT (toggle):', response.status, response.statusText);
+    console.log('📡 PUT response (toggle):', response.status, response.statusText);
     const responseData = await response.text();
-    console.log('📡 Données de réponse PUT (toggle):', responseData);
+    console.log('📡 PUT response data (toggle):', responseData);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}, body: ${responseData}`);
     }
     
-    console.log('🔄 Rechargement après toggle...');
+    console.log('🔄 Reloading tasks after toggle...');
     await loadTasks();
   } catch (error) {
-    console.error('❌ Erreur lors de la mise à jour:', error);
-    alert('Erreur lors de la mise à jour: ' + error.message);
+    console.error('❌ Error updating task:', error);
+    alert('Error updating task: ' + error.message);
   }
 }
 
-// Modifier le titre
+// Edit task title
 function editTask(task, liElement) {
-  console.log('✏️ Mode édition pour la tâche:', task.id);
+  console.log('✏️ Editing mode for task:', task.id);
   liElement.innerHTML = "";
   
   const input = document.createElement("input");
@@ -131,11 +131,11 @@ function editTask(task, liElement) {
   input.style.width = "300px";
   
   const saveBtn = document.createElement("button");
-  saveBtn.textContent = "💾 Enregistrer";
+  saveBtn.textContent = "💾 Save";
   saveBtn.onclick = async () => {
     const newTitle = input.value.trim();
     if (!newTitle) {
-      alert("Le titre ne peut pas être vide !");
+      alert("Title cannot be empty!");
       return;
     }
     
@@ -145,7 +145,7 @@ function editTask(task, liElement) {
     };
     
     try {
-      console.log('💾 Sauvegarde de la tâche:', task.id, 'avec:', updatedTask);
+      console.log('💾 Saving task:', task.id, 'with:', updatedTask);
       const response = await fetch(`${API_URL}/${task.id}`, {
         method: "PUT",
         headers: { 
@@ -155,26 +155,26 @@ function editTask(task, liElement) {
         body: JSON.stringify(updatedTask)
       });
       
-      console.log('📡 Réponse PUT (edit):', response.status, response.statusText);
+      console.log('📡 PUT response (edit):', response.status, response.statusText);
       const responseData = await response.text();
-      console.log('📡 Données de réponse PUT (edit):', responseData);
+      console.log('📡 PUT response data (edit):', responseData);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}, body: ${responseData}`);
       }
       
-      console.log('🔄 Rechargement après sauvegarde...');
+      console.log('🔄 Reloading tasks after save...');
       await loadTasks();
     } catch (error) {
-      console.error('❌ Erreur lors de la sauvegarde:', error);
-      alert('Erreur lors de la sauvegarde: ' + error.message);
+      console.error('❌ Error saving task:', error);
+      alert('Error saving task: ' + error.message);
     }
   };
   
   const cancelBtn = document.createElement("button");
-  cancelBtn.textContent = "❌ Annuler";
+  cancelBtn.textContent = "❌ Cancel";
   cancelBtn.onclick = () => {
-    console.log('❌ Annulation édition');
+    console.log('❌ Edit cancelled');
     loadTasks();
   };
   
@@ -182,14 +182,14 @@ function editTask(task, liElement) {
   input.focus();
 }
 
-// Supprimer
+// Delete task
 async function deleteTask(id) {
-  if (!confirm("Êtes-vous sûr de vouloir supprimer cette tâche ?")) {
+  if (!confirm("Are you sure you want to delete this task?")) {
     return;
   }
   
   try {
-    console.log('🗑️ Suppression de la tâche:', id);
+    console.log('🗑️ Deleting task:', id);
     const response = await fetch(`${API_URL}/${id}`, { 
       method: "DELETE",
       headers: {
@@ -197,43 +197,43 @@ async function deleteTask(id) {
       }
     });
     
-    console.log('📡 Réponse DELETE:', response.status, response.statusText);
+    console.log('📡 DELETE response:', response.status, response.statusText);
     const responseData = await response.text();
-    console.log('📡 Données de réponse DELETE:', responseData);
+    console.log('📡 DELETE response data:', responseData);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}, body: ${responseData}`);
     }
     
-    console.log('🔄 Rechargement après suppression...');
+    console.log('🔄 Reloading tasks after deletion...');
     await loadTasks();
   } catch (error) {
-    console.error('❌ Erreur lors de la suppression:', error);
-    alert('Erreur lors de la suppression: ' + error.message);
+    console.error('❌ Error deleting task:', error);
+    alert('Error deleting task: ' + error.message);
   }
 }
 
-// Test de connexion API
+// API connection test
 async function testAPI() {
-  console.log('🧪 Test de l\'API...');
+  console.log('🧪 Testing API...');
   try {
     const response = await fetch(API_URL);
-    console.log('🧪 Test GET:', response.status, response.statusText);
+    console.log('🧪 GET test:', response.status, response.statusText);
     const data = await response.text();
-    console.log('🧪 Données reçues:', data);
+    console.log('🧪 Received data:', data);
   } catch (error) {
-    console.error('🧪 Erreur test API:', error);
+    console.error('🧪 API test error:', error);
   }
 }
 
-// Charger au démarrage
+// Load tasks on page load
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('🚀 Application démarrée');
-  testAPI(); // Test initial
+  console.log('🚀 Application started');
+  testAPI(); // Initial test
   loadTasks();
 });
 
-// Permettre d'ajouter une tâche avec la touche Entrée
+// Allow Enter key to add task
 document.addEventListener('DOMContentLoaded', function() {
   const taskInput = document.getElementById('taskTitle');
   if (taskInput) {
@@ -245,13 +245,13 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Fonction de debug manuel (à appeler dans la console)
+// Manual debug function (call from console)
 window.debugTask = function(id) {
-  console.log('🔍 Debug manuel pour tâche:', id);
+  console.log('🔍 Manual debug for task:', id);
   fetch(`${API_URL}/${id}`)
     .then(r => r.text())
-    .then(data => console.log('🔍 Données tâche:', data))
-    .catch(e => console.error('🔍 Erreur debug:', e));
+    .then(data => console.log('🔍 Task data:', data))
+    .catch(e => console.error('🔍 Debug error:', e));
 };
 
 console.log('📋 Todo App Debug version loaded');
