@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo App - Serverless</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input, button { margin: 5px; padding: 8px; }
+    ul { list-style-type: none; padding: 0; }
+    li { padding: 5px; border-bottom: 1px solid #ddd; }
+    .done { text-decoration: line-through; color: gray; }
+  </style>
+</head>
+<body>
+  <h1>📋 Ma Todo App </h1>
+
+  <input type="text" id="taskTitle" placeholder="Nouvelle tâche">
+  <button onclick="addTask()">Ajouter</button>
+
+  <h2>Tâches</h2>
+  <ul id="taskList"></ul>
+
+  <script src="app.js"></script>
+</body>
+</html>
