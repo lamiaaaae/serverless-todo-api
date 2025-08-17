@@ -32,6 +32,13 @@ The following diagram illustrates the architecture of the solution:
 5. Logs and monitoring are collected in **Amazon CloudWatch**.  
 6. **IAM roles and policies** control access between services securely.  
 
+## Demo Video
+
+Watch the deployed solution in action:
+
+[Watch the demo video](https://drive.google.com/file/d/1Lke9vTJItn6acwb6XRtHJGTKAaF9-I5R/view?usp=sharing)
+
+
 
 # Customizing the Solution
 
