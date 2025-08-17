@@ -50,8 +50,8 @@ Watch the deployed solution in action:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/my-project.git
-cd my-project
+git clone https://github.com/lamiaaaae/serverless-todo-api.git
+cd serverless-todo-api.git
 export MAIN_DIRECTORY=$PWD
 
 ```
