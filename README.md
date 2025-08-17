@@ -47,6 +47,8 @@ git clone https://github.com/your-username/my-project.git
 cd my-project
 export MAIN_DIRECTORY=$PWD
 
+```
+
 
 ### 2. Unit Test
 
