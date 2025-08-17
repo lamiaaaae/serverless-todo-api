@@ -31,3 +31,36 @@ The following diagram illustrates the architecture of the solution:
 4. Lambda executes the appropriate CRUD logic and interacts with **DynamoDB** for data persistence.  
 5. Logs and monitoring are collected in **Amazon CloudWatch**.  
 6. **IAM roles and policies** control access between services securely.  
+
+##  Project Customization
+
+### Prerequisites for Customization
+- AWS Command Line Interface (CLI)  
+- Node.js 20.x or later
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/your-username/my-project.git
+cd my-project
+export MAIN_DIRECTORY=$PWD
+
+### 2. Unit Test
+
+
+After making changes, run unit tests to make sure added customizations pass:
+
+```bash
+cd $MAIN_DIRECTORY/deployment
+chmod +x run-unit-tests.sh && ./run-unit-tests.sh
+
+### 3. Build and Deploy
+
+```bash
+cd $MAIN_DIRECTORY/source/constructs
+npm run clean:install
+overrideWarningsEnabled=false npx cdk bootstrap --profile <PROFILE_NAME>
+overrideWarningsEnabled=false npx cdk deploy \
+ --parameters DeployDemoUIParameter=Yes \
+ --parameters SourceBucketsParameter=<MY_BUCKET> \
+ --profile <PROFILE_NAME>
+
